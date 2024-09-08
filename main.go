@@ -1,9 +1,10 @@
 package main
 
-func getArtifactsMmoToken() string {
-	getEnvVar("ARTIFACTS_MMO_TOKEN")
-}
+import (
+	"jackmaunders/artifacts-mmo/actions"
+)
 
 func main() {
-
+	jack := actions.Character{Name: "Jack"}
+	jack.Move(actions.MoveCorrdinates{X: 5, Y: 4})
 }
