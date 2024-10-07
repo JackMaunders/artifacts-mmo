@@ -16,8 +16,12 @@ type ResponseData struct {
 	Destination schema.Destination `json:"destination"`
 }
 
-type Response struct {
+type ActionResponse struct {
 	Data ResponseData `json:"data"`
+}
+
+type CharacterResponse struct {
+	Data schema.Character `json:"data"`
 }
 
 type ResponseErrorData struct {
@@ -29,19 +33,18 @@ type ResponseError struct {
 	Error ResponseErrorData `json:"error"`
 }
 
-func SendRequest(url string, payload *bytes.Reader) error {
-	artifactsMmoToken := getArtifactsMmoToken()
+func SendRequest(url string, method string, payload *bytes.Reader) []byte {
 
-	req, _ := http.NewRequest("POST", url, payload)
+	fmt.Println("Sending request to: ", url)
 
-	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Authorization", "Bearer "+artifactsMmoToken)
+	req, _ := http.NewRequest(method, url, payload)
+
+	req = addHeaders(req)
 
 	res, err := http.DefaultClient.Do(req)
 
 	if err != nil {
-		return fmt.Errorf("error making request: %v", err)
+		fmt.Printf("Error making request: %v", err)
 	}
 
 	defer res.Body.Close()
@@ -51,16 +54,33 @@ func SendRequest(url string, payload *bytes.Reader) error {
 		var errorBody ResponseError
 		json.Unmarshal(body, &errorBody)
 		prettyError, _ := json.MarshalIndent(errorBody, "", "\t")
-		fmt.Printf(string(prettyError))
-		return nil
+		fmt.Println(string(prettyError))
 	}
 
-	var result Response
+	return body
+}
+
+func HandleActionResponse(body []byte) ActionResponse {
+	var result ActionResponse
 	json.Unmarshal(body, &result)
-	pretty, _ := json.MarshalIndent(result, "", "\t")
-	fmt.Println(res)
-	fmt.Println(string(pretty))
-	return nil
+	return result
+}
+
+func HandleCharacterResponse(body []byte) CharacterResponse {
+	var result CharacterResponse
+	json.Unmarshal(body, &result)
+	// pretty, _ := json.MarshalIndent(result, "", "\t")
+	// fmt.Println(string(pretty))
+	return result
+}
+
+func addHeaders(req *http.Request) *http.Request {
+	artifactsMmoToken := getArtifactsMmoToken()
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer "+artifactsMmoToken)
+	return req
 }
 
 func getArtifactsMmoToken() string {
