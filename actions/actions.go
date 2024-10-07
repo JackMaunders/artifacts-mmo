@@ -41,5 +41,5 @@ func (c Character) Move(coordinates MoveCorrdinates) {
 	responseBody := request.SendRequest(url, "POST", bytes.NewReader(requestBody))
 	response := request.HandleActionResponse(responseBody)
 
-	fmt.Println(response.Data.Character.Name + " has moved to " + fmt.Sprint(response.Data.Destination.X) + " " + fmt.Sprint(response.Data.Destination.Y))
+	fmt.Println(c.Name + " has moved to " + fmt.Sprint(response.Data.Destination.X) + " " + fmt.Sprint(response.Data.Destination.Y))
 }

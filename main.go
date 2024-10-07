@@ -21,9 +21,6 @@ func handleMove(w http.ResponseWriter, r *http.Request) {
 	characterName := vars["character"]
 	direction := vars["direction"]
 
-	fmt.Println("Character: ", characterName)
-	fmt.Println("Direction: ", direction)
-
 	// Move to regex validation in path handler
 	if direction != "north" && direction != "south" && direction != "east" && direction != "west" {
 		http.Error(w, "Invalid direction provided", http.StatusBadRequest)
