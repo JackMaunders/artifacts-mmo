@@ -14,12 +14,12 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Print("Error loading .env file, using CLI environment variables")
+		fmt.Print("Error loading .env file, using CLI environment variables\n")
 	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		log.Panic("Port not configured, exiting")
+		log.Panic("Port not configured, exiting\n")
 	}
 
 	r := mux.NewRouter()
