@@ -16,13 +16,20 @@ func main() {
 	http.ListenAndServe(":3001", r)
 }
 
+const (
+	North = "north"
+	South = "south"
+	East  = "east"
+	West  = "west"
+)
+
 func handleMove(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	characterName := vars["character"]
 	direction := vars["direction"]
 
 	// Move to regex validation in path handler
-	if direction != "north" && direction != "south" && direction != "east" && direction != "west" {
+	if !isValidDirection(direction) {
 		http.Error(w, "Invalid direction provided", http.StatusBadRequest)
 		return
 	}
@@ -34,15 +41,24 @@ func handleMove(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+func isValidDirection(direction string) bool {
+	switch direction {
+	case North, South, East, West:
+		return true
+	default:
+		return false
+	}
+}
+
 func getNewCoordinates(direction string, currentCoordinates actions.MoveCorrdinates) actions.MoveCorrdinates {
 	switch direction {
-	case "north":
+	case North:
 		return actions.MoveCorrdinates{X: currentCoordinates.X, Y: currentCoordinates.Y - 1}
-	case "south":
+	case South:
 		return actions.MoveCorrdinates{X: currentCoordinates.X, Y: currentCoordinates.Y + 1}
-	case "east":
+	case East:
 		return actions.MoveCorrdinates{X: currentCoordinates.X + 1, Y: currentCoordinates.Y}
-	case "west":
+	case West:
 		return actions.MoveCorrdinates{X: currentCoordinates.X - 1, Y: currentCoordinates.Y}
 	}
 
