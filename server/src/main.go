@@ -3,17 +3,27 @@ package main
 import (
 	"fmt"
 	"jackmaunders/artifacts-mmo/src/actions"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	r := mux.NewRouter()
 	r.HandleFunc("/{character}/move/{direction}", handleMove).Methods("POST")
 
-	fmt.Println("Server is starting on port 8080, head to https://artifactsmmo.com/client to see the game in action")
-	http.ListenAndServe(":8080", r)
+	port := os.Getenv("PORT")
+
+	fmt.Printf("Server is starting on port %s, head to https://artifactsmmo.com/client to see the game in action\n", port)
+	http.ListenAndServe(fmt.Sprintf(":%s", port), r)
 }
 
 const (

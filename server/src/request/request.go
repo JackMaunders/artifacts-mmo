@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"jackmaunders/artifacts-mmo/src/env"
 	"jackmaunders/artifacts-mmo/src/schema"
 	"net/http"
+	"os"
 )
 
 type ResponseData struct {
@@ -69,8 +69,6 @@ func HandleActionResponse(body []byte) ActionResponse {
 func HandleCharacterResponse(body []byte) CharacterResponse {
 	var result CharacterResponse
 	json.Unmarshal(body, &result)
-	pretty, _ := json.MarshalIndent(result, "", "\t")
-	fmt.Println(string(pretty))
 	return result
 }
 
@@ -84,5 +82,5 @@ func addHeaders(req *http.Request) *http.Request {
 }
 
 func getArtifactsMmoToken() string {
-	return env.GetEnvVar("ARTIFACTS_MMO_TOKEN")
+	return os.Getenv("ARTIFACTS_MMO_TOKEN")
 }
