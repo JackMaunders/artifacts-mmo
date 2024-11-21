@@ -35,7 +35,7 @@ type ResponseError struct {
 
 func SendRequest(url string, method string, payload *bytes.Reader) []byte {
 
-	fmt.Println("Sending request to: ", url)
+	fmt.Println("Sending request to:", url)
 
 	req, _ := http.NewRequest(method, url, payload)
 
@@ -69,8 +69,8 @@ func HandleActionResponse(body []byte) ActionResponse {
 func HandleCharacterResponse(body []byte) CharacterResponse {
 	var result CharacterResponse
 	json.Unmarshal(body, &result)
-	// pretty, _ := json.MarshalIndent(result, "", "\t")
-	// fmt.Println(string(pretty))
+	pretty, _ := json.MarshalIndent(result, "", "\t")
+	fmt.Println(string(pretty))
 	return result
 }
 

@@ -17,7 +17,7 @@ type MoveCorrdinates struct {
 }
 
 func (c Character) GetCurrentLocation() MoveCorrdinates {
-	fmt.Println("Getting " + c.Name + "'s current location")
+	fmt.Println("Getting " + c.Name + "'s current location...")
 
 	url := fmt.Sprintf("https://api.artifactsmmo.com/characters/%s", c.Name)
 
@@ -26,7 +26,7 @@ func (c Character) GetCurrentLocation() MoveCorrdinates {
 
 	currentLocation := MoveCorrdinates{X: response.Data.X, Y: response.Data.Y}
 
-	fmt.Printf("%s's current location is %b %b", c.Name, currentLocation.X, currentLocation.Y)
+	fmt.Printf("%s's current location is {%d %d}\n", c.Name, currentLocation.X, currentLocation.Y)
 
 	return currentLocation
 }
@@ -41,5 +41,5 @@ func (c Character) Move(coordinates MoveCorrdinates) {
 	responseBody := request.SendRequest(url, "POST", bytes.NewReader(requestBody))
 	response := request.HandleActionResponse(responseBody)
 
-	fmt.Println(c.Name + " has moved to " + fmt.Sprint(response.Data.Destination.X) + " " + fmt.Sprint(response.Data.Destination.Y))
+	fmt.Println(c.Name + " has moved to {" + fmt.Sprint(response.Data.Destination.X) + " " + fmt.Sprint(response.Data.Destination.Y) + "}")
 }
