@@ -12,8 +12,8 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/{character}/move/{direction}", handleMove).Methods("POST")
 
-	fmt.Println("Server is starting on port 3001, head to https://artifactsmmo.com/client to see the game in action")
-	http.ListenAndServe(":3001", r)
+	fmt.Println("Server is starting on port 8080, head to https://artifactsmmo.com/client to see the game in action")
+	http.ListenAndServe(":8080", r)
 }
 
 const (
