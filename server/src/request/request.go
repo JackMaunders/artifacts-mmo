@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"jackmaunders/artifacts-mmo/env"
-	"jackmaunders/artifacts-mmo/schema"
+	"jackmaunders/artifacts-mmo/src/env"
+	"jackmaunders/artifacts-mmo/src/schema"
 	"net/http"
 )
 

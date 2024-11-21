@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"jackmaunders/artifacts-mmo/request"
+	"jackmaunders/artifacts-mmo/src/request"
 )
 
 type Character struct {

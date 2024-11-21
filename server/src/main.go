@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"jackmaunders/artifacts-mmo/actions"
+	"jackmaunders/artifacts-mmo/src/actions"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -12,7 +12,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/{character}/move/{direction}", handleMove).Methods("POST")
 
-	fmt.Println("Server is starting on port 3001")
+	fmt.Println("Server is starting on port 3001, head to https://artifactsmmo.com/client to see the game in action")
 	http.ListenAndServe(":3001", r)
 }
 
