@@ -14,13 +14,16 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Print("Error loading .env file, using CLI environment variables")
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Panic("Port not configured, exiting")
 	}
 
 	r := mux.NewRouter()
 	r.HandleFunc("/{character}/move/{direction}", handleMove).Methods("POST")
-
-	port := os.Getenv("PORT")
 
 	fmt.Printf("Server is starting on port %s, head to https://artifactsmmo.com/client to see the game in action\n", port)
 	http.ListenAndServe(fmt.Sprintf(":%s", port), r)
