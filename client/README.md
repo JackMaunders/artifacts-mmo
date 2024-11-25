@@ -22,6 +22,12 @@ $ npm install
 $ npm run dev
 ```
 
+### Running the tests
+
+```sh
+$ npm test
+```
+
 ### Building
 
 ```sh
