@@ -6,7 +6,7 @@ export const GamepadController = ({ selectedCharacter }: { selectedCharacter: st
     console.log(`Moving ${selectedCharacter} ${direction}`);
 
     try {
-      await fetch(`http://localhost:8080/${selectedCharacter}/moe/${direction}`, { method: 'POST' });
+      await fetch(`http://localhost:8080/${selectedCharacter}/move/${direction}`, { method: 'POST' });
     } catch (error) {
       console.error('Error moving character', error);
     }
