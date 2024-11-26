@@ -31,10 +31,10 @@ func main() {
 }
 
 const (
-	North = "north"
-	South = "south"
-	East  = "east"
-	West  = "west"
+	Up    = "up"
+	Down  = "down"
+	Left  = "left"
+	Right = "right"
 )
 
 func handleMove(w http.ResponseWriter, r *http.Request) {
@@ -60,7 +60,7 @@ func handleMove(w http.ResponseWriter, r *http.Request) {
 
 func isValidDirection(direction string) bool {
 	switch direction {
-	case North, South, East, West:
+	case Up, Down, Left, Right:
 		return true
 	default:
 		return false
@@ -69,14 +69,14 @@ func isValidDirection(direction string) bool {
 
 func getNewCoordinates(direction string, currentCoordinates actions.MoveCorrdinates) actions.MoveCorrdinates {
 	switch direction {
-	case North:
+	case Up:
 		return actions.MoveCorrdinates{X: currentCoordinates.X, Y: currentCoordinates.Y - 1}
-	case South:
+	case Down:
 		return actions.MoveCorrdinates{X: currentCoordinates.X, Y: currentCoordinates.Y + 1}
-	case East:
-		return actions.MoveCorrdinates{X: currentCoordinates.X + 1, Y: currentCoordinates.Y}
-	case West:
+	case Left:
 		return actions.MoveCorrdinates{X: currentCoordinates.X - 1, Y: currentCoordinates.Y}
+	case Right:
+		return actions.MoveCorrdinates{X: currentCoordinates.X + 1, Y: currentCoordinates.Y}
 	}
 
 	return currentCoordinates
