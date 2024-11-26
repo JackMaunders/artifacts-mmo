@@ -23,7 +23,8 @@ func main() {
 	}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/{character}/move/{direction}", handleMove).Methods("POST")
+	r.Use(mux.CORSMethodMiddleware(r))
+	r.HandleFunc("/{character}/move/{direction}", handleMove).Methods(http.MethodPost, http.MethodOptions)
 
 	fmt.Printf("Server is starting on port %s, head to https://artifactsmmo.com/client to see the game in action\n", port)
 	http.ListenAndServe(fmt.Sprintf(":%s", port), r)
@@ -37,6 +38,9 @@ const (
 )
 
 func handleMove(w http.ResponseWriter, r *http.Request) {
+	// @TODO: Add CORS middleware & handle set origins
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	vars := mux.Vars(r)
 	characterName := vars["character"]
 	direction := vars["direction"]
