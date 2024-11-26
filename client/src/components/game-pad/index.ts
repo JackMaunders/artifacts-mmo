@@ -1,1 +1,1 @@
-export { GamepadController as GamePad } from './Gamepad.controller';
+export { GamepadController as Gamepad } from './Gamepad.controller';

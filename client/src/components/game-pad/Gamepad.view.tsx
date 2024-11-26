@@ -1,6 +1,10 @@
 import './Gamepad.css'
 
-export const GamepadView = () => {
+type GamepadViewProps = {
+  handleDirection: (direction: string) => void;
+}
+
+export const GamepadView = ({ handleDirection }: GamepadViewProps) => {
   return (
     <div className='controllerContainer'>
       <div className="cable" />
@@ -20,10 +24,9 @@ export const GamepadView = () => {
         <div className="controllerLeft">
           <div className="circle" />
           <div className="crossCenter">
-            <div className="crossTop" />
-            <div className="crossBottom" />
-            <div className="crossLeft" />
-            <div className="crossRight" />
+            {['up', 'down', 'left', 'right'].map((direction) => (
+              <button key={direction} className={direction} onClick={() => handleDirection(direction)} />
+            ))}
             <div className="crossCircle" />
           </div>
         </div>
